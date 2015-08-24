@@ -22,20 +22,27 @@ ApplicationWindow {
         }
     }
 
-    MainForm {
-        anchors.fill: parent
-        button1.onClicked: messageDialog.show(qsTr("Button 1 pressed"))
-        button2.onClicked: messageDialog.show(qsTr("Button 2 pressed"))
+    // implement a stack view for navigation through the views
+    StackView {
+            id: stackView
+            anchors.fill: parent
+            // Implements back key navigation
+            focus: true
+            Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
+                                 stackView.pop();
+                                 event.accepted = true;
+                             }
+            initialItem: MainForm {
+                anchors.fill: parent
+                button1.onClicked: {
+                    var cmp = Qt.createComponent("Scan.qml")
+                    var win = cmp.createObject(stackView)
+                    stackView.push(win)
+                }
+
+            }
+
     }
 
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("May I have your attention, please?")
-
-        function show(caption) {
-            messageDialog.text = caption;
-            messageDialog.open();
-        }
-    }
 }
 

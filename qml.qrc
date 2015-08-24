@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainForm.ui.qml</file>
+        <file>Scan.qml</file>
+        <file>ScanForm.ui.qml</file>
     </qresource>
 </RCC>
-
